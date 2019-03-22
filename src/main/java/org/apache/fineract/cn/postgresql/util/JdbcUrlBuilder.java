@@ -50,32 +50,20 @@ public final class JdbcUrlBuilder {
   }
 
   public String build() {
+    final String[] hostList = this.host.split(",");
     switch (this.type) {
       case POSTGRESQL:
-        final StringBuilder jdbcUrl = new StringBuilder(this.type.getSubProtocol());
-        if (this.host == null){
-          if (this.instanceName == null){
-            jdbcUrl.append("/");
+        final StringBuilder jdbcUrl = new StringBuilder();
+        final String jdbcProtocol = this.type.getSubProtocol() + (hostList.length > 1 ? "replication://" : "//");
+        jdbcUrl.append(jdbcProtocol);
+        for (int i = 0; i < hostList.length; i++) {
+          jdbcUrl.append(hostList[i].trim()).append(":").append(this.port);
+          if ((i + 1) < hostList.length) {
+            jdbcUrl.append(",");
           }
-          else
-            jdbcUrl.append(instanceName);
         }
-        else {
-          if (this.port == null){
-            if (this.instanceName == null){
-              jdbcUrl.append("//").append(this.host).append("/");
-            }
-            else
-              jdbcUrl.append("//").append(this.host).append("/").append(this.instanceName);
-          }
-          else {
-            if (this.instanceName == null){
-              jdbcUrl.append("//").append(this.host).append(":").append(this.port).append("/");
-            }
-            else {
-              jdbcUrl.append("//").append(this.host).append(":").append(this.port).append("/").append(instanceName);
-            }
-          }
+        if (this.instanceName != null) {
+          jdbcUrl.append("/").append(this.instanceName);
         }
         return jdbcUrl.toString();
       default:

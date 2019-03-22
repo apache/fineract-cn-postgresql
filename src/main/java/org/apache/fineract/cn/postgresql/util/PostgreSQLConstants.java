@@ -23,7 +23,7 @@ public interface PostgreSQLConstants {
   String LOGGER_NAME = "postgresql-logger";
 
   String POSTGRESQL_DRIVER_CLASS_PROP = "postgresql.driverClass";
-  String POSTGRESQL_DRIVER_CLASS_DEFAULT = "org.postgresql.jdbc.Driver";
+  String POSTGRESQL_DRIVER_CLASS_DEFAULT = "org.postgresql.Driver";
   String POSTGRESQL_DATABASE_NAME_PROP = "postgresql.database";
   String POSTGRESQL_DATABASE_NAME_DEFAULT = "seshat";
   String POSTGRESQL_HOST_PROP = "postgresql.host";
@@ -32,6 +32,8 @@ public interface PostgreSQLConstants {
   String POSTGRESQL_PORT_DEFAULT = "5432";
   String POSTGRESQL_USER_PROP = "postgresql.user";
   String POSTGRESQL_USER_DEFAULT = "postgres";
+  String POSTGRESQL_PASSWORD_PROP = "postgresql.password";
+  String POSTGRESQL_PASSWORD_DEFAULT = "postgres";
 
   String BONECP_IDLE_MAX_AGE_PROP = "bonecp.idleMaxAgeInMinutes";
   String BONECP_IDLE_MAX_AGE_DEFAULT = "240";

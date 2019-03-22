@@ -35,7 +35,7 @@ import org.springframework.dao.annotation.PersistenceExceptionTranslationPostPro
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -70,7 +70,7 @@ public class PostgreSQLJavaConfiguration {
     em.setDataSource(dataSource);
     em.setPackagesToScan("org.apache.fineract.cn.**.repository");
 
-    final JpaVendorAdapter vendorAdapter = new OpenJpaVendorAdapter();
+    final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     em.setJpaVendorAdapter(vendorAdapter);
     em.setJpaProperties(additionalProperties());
 
@@ -108,6 +108,8 @@ public class PostgreSQLJavaConfiguration {
             .build());
     boneCPDataSource.setUsername(
             this.env.getProperty(PostgreSQLConstants.POSTGRESQL_USER_PROP, PostgreSQLConstants.POSTGRESQL_USER_DEFAULT));
+    boneCPDataSource.setPassword(
+            this.env.getProperty(PostgreSQLConstants.POSTGRESQL_PASSWORD_PROP, PostgreSQLConstants.POSTGRESQL_PASSWORD_DEFAULT));
     boneCPDataSource.setIdleConnectionTestPeriodInMinutes(
             Long.valueOf(this.env.getProperty(PostgreSQLConstants.BONECP_IDLE_CONNECTION_TEST_PROP, PostgreSQLConstants.BONECP_IDLE_CONNECTION_TEST_DEFAULT)));
     boneCPDataSource.setIdleMaxAgeInMinutes(
@@ -131,7 +133,7 @@ public class PostgreSQLJavaConfiguration {
 
   private Properties additionalProperties() {
     final Properties properties = new Properties();
-    properties.setProperty("openjpa.jdbc.DBDictionary", "org.apache.openjpa.jdbc.sql.PostgresDictionary");
+    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
     return properties;
   }
 }
