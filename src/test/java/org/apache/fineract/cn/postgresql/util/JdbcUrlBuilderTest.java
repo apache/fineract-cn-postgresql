@@ -33,54 +33,6 @@ public class JdbcUrlBuilderTest {
   }
 
   @Test
-  public void shouldCreatePostgresqlUrlNeitherHostNorPort() {
-    final String expectedJdbcUrl = "jdbc:postgresql:comp_test";
-
-    final String postgresqlJdbcUrl = JdbcUrlBuilder
-            .create(JdbcUrlBuilder.DatabaseType.POSTGRESQL)
-            .instanceName("comp_test")
-            .build();
-
-    Assert.assertEquals(expectedJdbcUrl, postgresqlJdbcUrl);
-  }
-
-  @Test
-  public void shouldCreatePostgresqlUrlNeitherHostNorInstance() {
-    final String expectedJdbcUrl = "jdbc:postgresql:/";
-
-    final String postgresqlJdbcUrl = JdbcUrlBuilder
-            .create(JdbcUrlBuilder.DatabaseType.POSTGRESQL)
-            .build();
-
-    Assert.assertEquals(expectedJdbcUrl, postgresqlJdbcUrl);
-  }
-
-  @Test
-  public void shouldCreatePostgresqlUrlWithHostAndInstance() {
-    final String expectedJdbcUrl = "jdbc:postgresql://localhost/comp_test";
-
-    final String postgresqlJdbcUrl = JdbcUrlBuilder
-        .create(JdbcUrlBuilder.DatabaseType.POSTGRESQL)
-        .host("localhost")
-        .instanceName("comp_test")
-        .build();
-
-    Assert.assertEquals(expectedJdbcUrl, postgresqlJdbcUrl);
-  }
-
-  @Test
-  public void shouldCreatePostgresqlUrlNoPort() {
-    final String expectedJdbcUrl = "jdbc:postgresql://localhost/";
-
-    final String postgresqlJdbcUrl = JdbcUrlBuilder
-        .create(JdbcUrlBuilder.DatabaseType.POSTGRESQL)
-        .host("localhost")
-        .build();
-
-    Assert.assertEquals(expectedJdbcUrl, postgresqlJdbcUrl);
-  }
-
-  @Test
   public void shouldCreatePostgresqlUrl() {
     final String expectedJdbcUrl = "jdbc:postgresql://localhost:5432/comp_test";
 
@@ -95,14 +47,28 @@ public class JdbcUrlBuilderTest {
   }
 
   @Test
-  public void shouldCreatePostgresqlUrlNoInstance() {
-    final String expectedJdbcUrl = "jdbc:postgresql://localhost:5432/";
+  public void shouldCreateMysqlUrlNoInstance() {
+    final String expectedJdbcUrl = "jdbc:postgresql://localhost:5432";
 
     final String postgresqlJdbcUrl = JdbcUrlBuilder
-        .create(JdbcUrlBuilder.DatabaseType.POSTGRESQL)
-        .host("localhost")
-        .port("5432").build();
+            .create(JdbcUrlBuilder.DatabaseType.POSTGRESQL)
+            .host("localhost")
+            .port("5432").build();
 
     Assert.assertEquals(expectedJdbcUrl, postgresqlJdbcUrl);
+  }
+
+  @Test
+  public void shouldCreateMysqlReplicationUrl() {
+    final String expectedJdbcUrl = "jdbc:postgresql:replication://localhost:5432,anotherhost:5432/comp_test";
+
+    final String mariaDbJdbcUrl = JdbcUrlBuilder
+            .create(JdbcUrlBuilder.DatabaseType.POSTGRESQL)
+            .host("localhost, anotherhost")
+            .port("5432")
+            .instanceName("comp_test")
+            .build();
+
+    Assert.assertEquals(expectedJdbcUrl, mariaDbJdbcUrl);
   }
 }
