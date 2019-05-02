@@ -47,7 +47,7 @@ public class JdbcUrlBuilderTest {
   }
 
   @Test
-  public void shouldCreateMysqlUrlNoInstance() {
+  public void shouldCreatePostgresqlUrlNoInstance() {
     final String expectedJdbcUrl = "jdbc:postgresql://localhost:5432";
 
     final String postgresqlJdbcUrl = JdbcUrlBuilder
@@ -59,7 +59,7 @@ public class JdbcUrlBuilderTest {
   }
 
   @Test
-  public void shouldCreateMysqlReplicationUrl() {
+  public void shouldCreatePostgresqlReplicationUrl() {
     final String expectedJdbcUrl = "jdbc:postgresql:replication://localhost:5432,anotherhost:5432/comp_test";
 
     final String mariaDbJdbcUrl = JdbcUrlBuilder

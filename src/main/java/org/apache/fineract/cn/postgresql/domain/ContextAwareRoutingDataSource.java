@@ -81,6 +81,7 @@ public final class ContextAwareRoutingDataSource extends AbstractRoutingDataSour
           .instanceName(tenant.getDatabaseName())
           .build());
       tenantDataSource.setUsername(tenant.getUser());
+      tenantDataSource.setPassword(tenant.getPassword());
 
       final BoneCPDataSource boneCpMetaDataSource = (BoneCPDataSource) this.metaDataSource;
       tenantDataSource.setIdleConnectionTestPeriodInMinutes(boneCpMetaDataSource.getIdleConnectionTestPeriodInMinutes());
@@ -99,7 +100,7 @@ public final class ContextAwareRoutingDataSource extends AbstractRoutingDataSour
   private void readAdditionalTenantInformation(final Tenant tenant) {
     this.logger.info("Reading additional information for {}.", tenant.getIdentifier());
     @SuppressWarnings({"SqlDialectInspection", "SqlNoDataSourceInspection"})
-    final String query = "SELECT driver_class, database_name, host, port, a_user FROM seshat.tenants WHERE identifier = ?";
+    final String query = "SELECT driver_class, database_name, host, port, a_user, pwd FROM tenants WHERE identifier = ?";
     try (final Connection connection = this.metaDataSource.getConnection()) {
       try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
         preparedStatement.setString(1, tenant.getIdentifier());
@@ -110,6 +111,7 @@ public final class ContextAwareRoutingDataSource extends AbstractRoutingDataSour
           tenant.setHost(resultSet.getString("host"));
           tenant.setPort(resultSet.getString("port"));
           tenant.setUser(resultSet.getString("a_user"));
+          tenant.setPassword(resultSet.getString("pwd"));
         }
       }
     } catch (SQLException ex) {

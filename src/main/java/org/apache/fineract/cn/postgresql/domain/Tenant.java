@@ -27,6 +27,7 @@ public final class Tenant {
   private String host;
   private String port;
   private String user;
+  private String password;
 
   public Tenant(final String identifier) {
     super();
@@ -76,4 +77,8 @@ public final class Tenant {
   public void setUser(String user) {
     this.user = user;
   }
+
+  public String getPassword() { return password; }
+
+  public void setPassword(String password) { this.password = password; }
 }
