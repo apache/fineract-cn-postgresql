@@ -90,7 +90,6 @@ public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
 		properties.put(PersistenceUnitProperties.BATCH_WRITING, BatchWriting.JDBC);
 		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.ALL_LABEL);// Todo: Reduce log level after test
 		properties.put(PersistenceUnitProperties.LOGGING_PARAMETERS, "true");
-		properties.put(PersistenceUnitProperties.DEPLOY_ON_STARTUP, "false");
 		return properties;
 	}
 }
