@@ -26,6 +26,7 @@ public interface PostgreSQLConstants {
   String POSTGRESQL_DRIVER_CLASS_DEFAULT = "org.postgresql.Driver";
   String POSTGRESQL_DATABASE_NAME_PROP = "postgresql.database";
   String POSTGRESQL_DATABASE_NAME_DEFAULT = "seshat";
+  String POSTGRESQL_DATABASE_NAME = "postgres";
   String POSTGRESQL_HOST_PROP = "postgresql.host";
   String POSTGRESQL_HOST_DEFAULT = "localhost";
   String POSTGRESQL_PORT_PROP = "postgresql.port";

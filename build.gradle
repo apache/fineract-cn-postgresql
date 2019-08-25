@@ -18,6 +18,12 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.org.jamgo:eclipselink-plugin:0.2.2"
     }
 }
 
@@ -25,16 +31,21 @@ plugins {
     id 'com.github.hierynomus.license' version '0.13.1'
     id("org.nosphere.apache.rat") version "0.3.1"
     id "com.jfrog.artifactory" version "4.9.5"
+ //   id "org.jamgo.eclipselink-plugin" version "0.2.2"
 }
 
 group 'org.apache.fineract.cn'
 version '0.1.0-BUILD-SNAPSHOT'
 
 ext.versions = [
-        springcontext        : '4.3.3.RELEASE',
-        springboot           : '1.4.1.RELEASE',
-        findbugs             : '3.0.1',
-        frameworklang        : '0.1.0-BUILD-SNAPSHOT'
+        springcontext: '4.3.3.RELEASE',
+        springboot   : '1.4.1.RELEASE',
+        findbugs     : '3.0.1',
+        frameworklang: '0.1.0-BUILD-SNAPSHOT',
+        bonecp       : '0.8.0.RELEASE',
+        flyway       : '4.0.1',
+        postgresql   : '42.2.5',
+        eclipselink  : '2.7.4',
 ]
 
 apply plugin: 'java'
@@ -42,6 +53,7 @@ apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'license'
+apply plugin: "org.jamgo.eclipselink-plugin"
 
 tasks.withType(JavaCompile) {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -59,11 +71,16 @@ dependencies {
             [group: 'org.springframework', name: 'spring-context', version: versions.springcontext],
             [group: 'com.google.code.findbugs', name: 'jsr305', version: versions.findbugs],
             [group: 'org.apache.fineract.cn', name: 'lang', version: versions.frameworklang],
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: versions.springboot],
-            [group: 'com.jolbox', name: 'bonecp', version: '0.8.0.RELEASE'],
-            [group: 'org.flywaydb', name: 'flyway-core', version: '4.0.1'],
-            [group: 'org.postgresql', name: 'postgresql', version: '42.2.5']
+            [group: 'com.jolbox', name: 'bonecp', version: versions.bonecp],
+            [group: 'org.flywaydb', name: 'flyway-core', version: versions.flyway],
+            [group: 'org.postgresql', name: 'postgresql', version: versions.postgresql],
+            [group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: versions.eclipselink]
     )
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: versions.springboot)
+            {
+                exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
+                exclude group: 'org.hibernate', module: 'hibernate-core'
+            }
     testCompile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springboot]
     )
@@ -94,11 +111,11 @@ artifactory {
         }
 
         defaults {
-            publications ('postgresqlPublication')
+            publications('postgresqlPublication')
         }
     }
 }
-artifactoryPublish.dependsOn('clean','publishToMavenLocal')
+artifactoryPublish.dependsOn('clean', 'publishToMavenLocal')
 
 license {
     header rootProject.file('HEADER')
@@ -121,3 +138,4 @@ rat {
     ]
     plainOutput = true
 }
+
