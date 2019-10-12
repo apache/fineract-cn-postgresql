@@ -18,11 +18,13 @@
  */
 package org.apache.fineract.cn.postgresql.config;
 
+import org.apache.fineract.cn.postgresql.util.EclipseLinkConstants;
 import org.eclipse.persistence.config.BatchWriting;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.config.TargetDatabase;
 import org.eclipse.persistence.logging.SessionLog;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
@@ -53,8 +55,10 @@ import java.util.Map;
 		"org.apache.fineract.cn.postgresql.util"
 })
 public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
-	
-	
+
+	@Value(EclipseLinkConstants.ECLIPSE_LINK_SHOW_SQL + ":" + EclipseLinkConstants.ECLIPSE_LINK_SHOW_SQL_DEFAULT)
+	private Boolean eclipseLinkShowSql;
+
 	protected EclipseLinkJpaConfiguration(DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManagerProvider) {
 		super(dataSource, properties, jtaTransactionManagerProvider);
 	}
@@ -75,7 +79,7 @@ public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
 	protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
 		EclipseLinkJpaVendorAdapter vendorAdapter = new EclipseLinkJpaVendorAdapter();
 		vendorAdapter.setDatabasePlatform("org.eclipse.persistence.platform.database.PostgreSQLPlatform");
-		vendorAdapter.setShowSql(true); // Todo: remove sql log
+		vendorAdapter.setShowSql(eclipseLinkShowSql);
 		vendorAdapter.setDatabase(Database.POSTGRESQL);
 		vendorAdapter.setGenerateDdl(false);
 		return vendorAdapter;

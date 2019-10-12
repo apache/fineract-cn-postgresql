@@ -11,11 +11,6 @@ Install Java 8 as described at https://docs.oracle.com/javase/8/docs/technotes/g
 Install PostgreSQL as described at 
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04.
 
-After installation you need to create the meta database:
-
-    sudo -i -u postgres psql
-    CREATE DATABASE system_console;
-    
 ## Multi-tenancy
 Multi-tenancy is reached by providing separate data storage on a per tenant basis.
 

@@ -56,7 +56,7 @@ public final class ContextAwareRoutingDataSource extends AbstractRoutingDataSour
 
   @Override
   protected Object determineCurrentLookupKey() {
-    return TenantContextHolder.checkedGetIdentifier();
+    return TenantContextHolder.identifier().orElse(null);
   }
 
   @Override
