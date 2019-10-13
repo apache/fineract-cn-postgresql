@@ -56,7 +56,7 @@ import java.util.Map;
 })
 public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
 
-	@Value(EclipseLinkConstants.ECLIPSE_LINK_SHOW_SQL + ":" + EclipseLinkConstants.ECLIPSE_LINK_SHOW_SQL_DEFAULT)
+	@Value("#{new Boolean(${" + EclipseLinkConstants.ECLIPSE_LINK_SHOW_SQL + ":" + EclipseLinkConstants.ECLIPSE_LINK_SHOW_SQL_DEFAULT + "})}")
 	private Boolean eclipseLinkShowSql;
 
 	protected EclipseLinkJpaConfiguration(DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManagerProvider) {
