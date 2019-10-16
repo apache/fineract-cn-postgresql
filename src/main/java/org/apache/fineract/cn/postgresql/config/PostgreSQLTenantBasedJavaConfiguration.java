@@ -24,6 +24,7 @@ import org.apache.fineract.cn.postgresql.util.PostgreSQLConstants;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
@@ -33,13 +34,14 @@ import java.util.HashMap;
 @Configuration
 @ConditionalOnProperty(prefix = "postgresql", name = "enabled", matchIfMissing = true)
 public class PostgreSQLTenantBasedJavaConfiguration {
+  @Bean
   public DataSource dataSource(@Qualifier(PostgreSQLConstants.LOGGER_NAME) final Logger logger,
                                final MetaDataSourceWrapper metaDataSource) {
 
-  final ContextAwareRoutingDataSource dataSources = new ContextAwareRoutingDataSource(logger, JdbcUrlBuilder.DatabaseType.POSTGRESQL);
-  dataSources.setMetaDataSource(metaDataSource.getMetaDataSource());
-  final HashMap<Object, Object> targetDataSources = new HashMap<>();
-  dataSources.setTargetDataSources(targetDataSources);
-  return dataSources;
+  final ContextAwareRoutingDataSource dataSource = new ContextAwareRoutingDataSource(logger, JdbcUrlBuilder.DatabaseType.POSTGRESQL);
+  dataSource.setMetaDataSource(metaDataSource.getMetaDataSource());
+  final HashMap<Object, Object> tenantDataSources = new HashMap<>();
+  dataSource.setTargetDataSources(tenantDataSources);
+  return dataSource;
   }
 }

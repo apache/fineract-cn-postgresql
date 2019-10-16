@@ -1,5 +1,8 @@
 # Apache Fineract CN PostgreSQL [![Build Status](https://api.travis-ci.com/apache/fineract-cn-postgresql.svg?branch=develop)](https://travis-ci.com/apache/fineract-cn-postgresql)
 
+For fineract-cn-* repositories this library provides tenant-separation based on header contents.
+[Read more](https://cwiki.apache.org/confluence/display/FINERACT/Fineract+CN+Project+Structure#FineractCNProjectStructure-postgresqlDBanddatapersistence).
+
 ## Abstract
 Apache Fineract CN is an application framework for digital financial services, a system to support nationwide and cross-national financial transactions and help to level and speed the creation of an inclusive, interconnected digital economy for every nation in the world.
 
@@ -11,11 +14,6 @@ Install Java 8 as described at https://docs.oracle.com/javase/8/docs/technotes/g
 Install PostgreSQL as described at 
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04.
 
-After installation you need to create the meta database:
-
-    sudo -i -u postgres psql
-    CREATE DATABASE system_console;
-    
 ## Multi-tenancy
 Multi-tenancy is reached by providing separate data storage on a per tenant basis.
 
