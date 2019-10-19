@@ -1,4 +1,4 @@
-# Apache Fineract CN PostgreSQL [![Build Status](https://api.travis-ci.com/apache/fineract-cn-postgresql.svg?branch=develop)](https://travis-ci.com/apache/fineract-cn-postgresql)
+# Apache Fineract CN PostgreSQL [![Build Status](https://api.travis-ci.com/apache/fineract-cn-postgresql.svg?branch=0.1.x)](https://travis-ci.com/apache/fineract-cn-postgresql)
 
 For fineract-cn-* repositories this library provides tenant-separation based on header contents.
 [Read more](https://cwiki.apache.org/confluence/display/FINERACT/Fineract+CN+Project+Structure#FineractCNProjectStructure-postgresqlDBanddatapersistence).
