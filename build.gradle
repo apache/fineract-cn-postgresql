@@ -38,13 +38,13 @@ plugins {
 }
 
 group 'org.apache.fineract.cn'
-version '0.1.0-BUILD-SNAPSHOT'
+version 'spring_boot_2-SNAPSHOT'
 
 ext.versions = [
         springcontext: '5.2.5.RELEASE',
         springboot   : '2.2.6.RELEASE',
         findbugs     : '3.0.2',
-        frameworklang: '0.1.0-BUILD-SNAPSHOT',
+        frameworklang: 'spring_boot_2-SNAPSHOT',
         bonecp       : '0.8.0.RELEASE',
         flyway       : '6.3.3',
         postgresql   : '42.2.5',
@@ -132,8 +132,11 @@ rat {
             "build/**",
             "gradlew",
             "gradlew.bat",
-            "README.md"
+            "README.md",
+            ".project",
+            "**/.settings/**",
+            ".classpath",
+            "**/bin/**"
     ]
-    plainOutput = true
 }
 
