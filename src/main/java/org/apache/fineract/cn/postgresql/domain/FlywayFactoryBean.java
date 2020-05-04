@@ -33,12 +33,13 @@ public class FlywayFactoryBean {
   }
 
   public Flyway create(final DataSource dataSource) {
-    final Flyway flyway = new Flyway();
-    flyway.setDataSource(dataSource);
-    flyway.setLocations("db/migrations/postgresql");
-    flyway.setTable(this.applicationName.getServiceName() + "_schema_version");
-    flyway.setBaselineOnMigrate(true);
-    flyway.setBaselineVersionAsString("0");
+    final Flyway flyway = Flyway.configure()
+        .dataSource(dataSource)
+        .locations("db/migrations/postgresql")
+        .table(this.applicationName.getServiceName() + "_schema_version")
+        .baselineOnMigrate(true)
+        .baselineVersion("0")
+        .load();
     return flyway;
   }
 }
